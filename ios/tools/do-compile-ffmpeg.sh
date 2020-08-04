@@ -239,7 +239,8 @@ else
         $FFMPEG_CFG_CPU \
         --extra-cflags="$FFMPEG_CFLAGS" \
         --extra-cxxflags="$FFMPEG_CFLAGS" \
-        --extra-ldflags="$FFMPEG_LDFLAGS $FFMPEG_DEP_LIBS"
+        --extra-ldflags="$FFMPEG_LDFLAGS $FFMPEG_DEP_LIBS" \
+        --disable-asm
     make clean
 fi
 
