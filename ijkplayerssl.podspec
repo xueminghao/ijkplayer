@@ -20,7 +20,7 @@ bilibili/ijkplayer k0.8.8  IJKMediaFramework ssl 上传到 cococapods
 
   s.platform     = :ios, "8.0"
 
-  s.source       = { :http => "https://github.com/xueminghao/ijkplayer/blob/master/Release-universal/IJKMediaFrameworkWithSSL.framework.zip" }
+  s.source       = { :http => "https://raw.githubusercontent.com/xueminghao/ijkplayer/master/Framework/IJKMediaFrameworkWithSSL.framework.zip" }
 
   s.vendored_frameworks = 'IJKMediaFrameworkWithSSL.framework'
 
