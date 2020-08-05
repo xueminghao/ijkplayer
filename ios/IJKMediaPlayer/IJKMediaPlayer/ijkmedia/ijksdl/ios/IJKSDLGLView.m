@@ -63,6 +63,9 @@ typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
     NSMutableArray *_registeredNotifications;
 
     IJKSDLGLViewApplicationState _applicationState;
+    
+    CGFloat _lastWidth;
+    CGFloat _lastHeight;
 }
 
 @synthesize isThirdGLView              = _isThirdGLView;
@@ -261,7 +264,12 @@ typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
     if (self.window.screen != nil) {
         _scaleFactor = self.window.screen.scale;
     }
-    [self invalidateRenderBuffer];
+    if (_lastWidth != self.bounds.size.width ||
+        _lastHeight != self.bounds.size.height) {
+        [self invalidateRenderBuffer];
+        _lastWidth = self.bounds.size.width;
+        _lastHeight = self.bounds.size.height;
+    }
 }
 
 - (void)setContentMode:(UIViewContentMode)contentMode
@@ -317,12 +325,12 @@ typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
     _isRenderBufferInvalidated = YES;
 
     if ([[NSThread currentThread] isMainThread]) {
-        [self display:nil];
-    } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             if (_isRenderBufferInvalidated)
                 [self display:nil];
         });
+    } else {
+        [self display:nil];
     }
 
     [self unlockGLActive];
